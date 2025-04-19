@@ -14,7 +14,13 @@ export class PgStorage implements IStorage {
   private db;
 
   constructor() {
-    const sql = neon(process.env.DATABASE_URL!);
+    // Vérifier que la variable d'environnement DATABASE_URL est définie
+    if (!process.env.DATABASE_URL) {
+      console.warn('La variable d\'environnement DATABASE_URL n\'est pas définie, utilisation d\'une URL par défaut');
+      process.env.DATABASE_URL = "postgres://postgres:postgres@localhost:5432/aci_online";
+    }
+    
+    const sql = neon(process.env.DATABASE_URL);
     this.db = drizzle(sql);
   }
 

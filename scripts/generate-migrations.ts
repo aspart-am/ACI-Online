@@ -11,8 +11,8 @@ import { MemStorage } from '../server/storage';
 async function generateMigrations() {
   // Vérifier que la variable d'environnement DATABASE_URL est définie
   if (!process.env.DATABASE_URL) {
-    console.error('La variable d\'environnement DATABASE_URL n\'est pas définie');
-    process.exit(1);
+    console.warn('La variable d\'environnement DATABASE_URL n\'est pas définie, utilisation d\'une URL par défaut');
+    process.env.DATABASE_URL = "postgres://postgres:postgres@localhost:5432/aci_online";
   }
 
   try {

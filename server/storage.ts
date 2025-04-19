@@ -562,6 +562,10 @@ export class MemStorage implements IStorage {
 import { PgStorage } from './pg-storage';
 
 // Utiliser PgStorage en production et MemStorage en développement
-export const storage = process.env.NODE_ENV === 'production' 
+// Par défaut, utiliser MemStorage si NODE_ENV n'est pas défini
+const isProduction = process.env.NODE_ENV === 'production';
+console.log(`Mode: ${isProduction ? 'production' : 'développement'}, utilisation de ${isProduction ? 'PgStorage' : 'MemStorage'}`);
+
+export const storage = isProduction 
   ? new PgStorage() 
   : new MemStorage();
